@@ -38,3 +38,22 @@ describe('The isObject function', () => {
   });
 });
 
+describe('The keys function', () => {
+  it('should return an array of the nested object keys', () => {
+    const obj = {foo: {bar: {baz: 17}}};
+
+    expect(keys(obj, [])).to.deep.equal(['foo', 'bar', 'baz', 17]);
+  });
+
+  it('should throw an error if multiple child properties are provided', () => {
+    const failObj = {
+      foo: {
+        bar: {baz: 17},
+        quux: 18
+      }
+    };
+
+    expect(keys.bind(null, failObj, [])).to.throw('Objects can only have a single child property.');
+  })
+});
+

@@ -20,13 +20,19 @@ function update(from, to) {
 }
 
 function keys(obj, arr) {
-  const keys = Object.keys(obj);
-
-  if (Object.keys(obj).length) {
+  if (!isObject(obj)) {
     return arr.concat([obj]);
   }
 
-  return (obj[arr.pop()], arr.concat(keys));
+  const objKeys = Object.keys(obj);
+
+  if (objKeys.length !== 1) {
+    throw new Error('Objects can only have a single child property.')
+  }
+
+  Array.prototype.push.apply(arr, objKeys);
+
+  return keys(obj[objKeys.pop()], arr);
 }
 
 function isObject(obj) {
